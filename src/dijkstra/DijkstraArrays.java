@@ -1,5 +1,7 @@
 package dijkstra;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import graph.Graph;
@@ -50,14 +52,26 @@ public class DijkstraArrays implements DijkstraMPA {
 
 	@Override
 	public List<Node> getPathTo(Node p) {
-		// TODO Auto-generated method stub
-		return null;
+		List<Node> path = new ArrayList<Node>();
+		path.add(p);
+		int id = p.getId();
+		Node q = prev[id];
+		while(true) {
+			path.add(q);
+			id = q.getId();
+			if(prev[id] == null) {
+				break;
+			} else {
+				q = prev[id];
+			}
+		}
+		Collections.reverse(path);
+		return path;
 	}
 
 	@Override
 	public int getDistanceTo(Node p) {
-		// TODO Auto-generated method stub
-		return 0;
+		return dist[p.getId()];
 	}
 
 }
