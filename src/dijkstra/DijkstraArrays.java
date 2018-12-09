@@ -2,7 +2,9 @@ package dijkstra;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import graph.Graph;
 import graph.Node;
@@ -13,7 +15,7 @@ import graph.Node;
  *
  */
 public class DijkstraArrays implements DijkstraMPA {
-	private int[] dist;
+	private double[] dist;
 	private Node[] prev;
 	private boolean[] ready;
 	
@@ -46,8 +48,53 @@ public class DijkstraArrays implements DijkstraMPA {
 
 	@Override
 	public long dijkstra(Graph g, Node origin) {
-		// TODO Auto-generated method stub
-		return 0;
+		long t0 = System.currentTimeMillis();
+		int size = g.getSize();
+		if(size != dist.length) {
+			this.setSize(size);
+		}
+		
+		int i, j, minNodeId;
+		double minDist;
+		
+		// Initialize array values
+		for(i = 0; i < size; i++) {
+			if(i == origin.getId()) {
+				dist[i] = 0;
+			} else {
+				dist[i] = Integer.MAX_VALUE;
+			}
+			ready[i] = false;
+			prev[i] = null;
+		}
+		
+		for(i = 0; i < size; i++) {
+			minDist = Integer.MAX_VALUE;
+			minNodeId = -1;
+			
+			for(j = 0; j < size; j++) {
+				if(!ready[j] && dist[j] < minDist) {
+					minDist = dist[j];
+					minNodeId = j;
+				}
+			}
+			
+			Node u = g.getNode(minNodeId);
+			ready[u.getId()] = true;
+			
+			Iterator<Map.Entry<Integer, Double>> it = u.getAdjacents().entrySet().iterator();
+			while(it.hasNext()) {
+				Map.Entry<Integer, Double> entry = (Map.Entry<Integer, Double>)it.next();
+				double currentDistance = dist[minNodeId] + entry.getValue();
+				int v = entry.getKey();
+				if(dist[v] > currentDistance) {
+					dist[v] = currentDistance;
+					prev[v] = u;
+				}
+			}
+		}
+		
+		return System.currentTimeMillis() - t0;
 	}
 
 	@Override
@@ -70,7 +117,7 @@ public class DijkstraArrays implements DijkstraMPA {
 	}
 
 	@Override
-	public int getDistanceTo(Node p) {
+	public double getDistanceTo(Node p) {
 		return dist[p.getId()];
 	}
 
