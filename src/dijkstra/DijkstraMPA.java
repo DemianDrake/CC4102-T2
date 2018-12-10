@@ -19,7 +19,7 @@ public interface DijkstraMPA {
 	 * @param origin Origin node from which every path will start
 	 * @return Time that algorithm took to execute
 	 */
-	public long dijkstra(Graph g, Node origin);
+	public long dijkstra(Graph g, graph.Node origin);
 
 	/**
 	 * Returns a list of nodes representing a minimal path from the first node of itself to the
@@ -28,7 +28,7 @@ public interface DijkstraMPA {
 	 * @param p The last node of the path
 	 * @return List of nodes conforming minimal path from origin to argument
 	 */
-	public List<Node> getPathTo(Node p);
+	public List<graph.Node> getPathTo(graph.Node p);
 
 	/**
 	 * Returns the distance of a minimal path between an origin node (set when dijkstra is used)
@@ -37,5 +37,5 @@ public interface DijkstraMPA {
 	 * @param p The last node of the path
 	 * @return Minimal path's distance from origin to p
 	 */
-	public double getDistanceTo(Node p);
+	public double getDistanceTo(graph.Node p);
 }
