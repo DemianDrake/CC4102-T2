@@ -77,4 +77,32 @@ public class Graph {
         return getInstance().graph;
     }
 
+    /**
+     * Returns the amount of vertices in the current graph.
+     *
+     * @return Size of the current graph.
+     */
+    public static int getSize() {
+        Node[] currentGraph = getGraph();
+        if (currentGraph != null) {
+            return currentGraph.length;
+        }
+        return 0;
+    }
+
+
+    /**
+     * Returns the node of the graph with the id = nodeId, or null if it doesn't exist.
+     *
+     * @param nodeId Id of the node to return.
+     * @return Node with id = nodeId.
+     */
+    public static Node getNode(int nodeId) {
+        Node[] currentGraph = getGraph();
+        if (currentGraph != null && nodeId > 0 && currentGraph.length > nodeId) {
+            return currentGraph[nodeId];
+        }
+        return null;
+    }
+
 }
