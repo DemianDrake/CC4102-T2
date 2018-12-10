@@ -6,7 +6,7 @@ import java.util.Random;
 /**
  * @author Alexis Espinoza G.
  * <p>
- * Singleton class used to create connected graphs
+ * Singleton class used to create connected graphs.
  */
 public class Graph {
 
@@ -27,11 +27,12 @@ public class Graph {
     /**
      * Creates a new random connected graph in the instance, replacing the previous graph.
      *
-     * @param vertices Amount of vertices for the new random graph
-     * @param edges    Amount of edges for the new random graph
-     * @throws IllegalArgumentException if the amount of edges isn't enough to generate a connected graph
+     * @param vertices Amount of vertices for the new random graph.
+     * @param edges    Amount of edges for the new random graph.
+     * @return A Graph object, with the random graph created in it.
+     * @throws IllegalArgumentException if the amount of edges isn't enough to generate a connected graph.
      */
-    public static void createRandom(int vertices, int edges) throws IllegalArgumentException {
+    public static Graph createRandom(int vertices, int edges) throws IllegalArgumentException {
 
         // Check if there are enough edges to return a connected graph
         if (edges < vertices - 1) {
@@ -66,15 +67,17 @@ public class Graph {
             instance.graph[v1].addAdjacentNode(instance.graph[v2], weight);
             instance.graph[v2].addAdjacentNode(instance.graph[v1], weight);
         }
+
+        return getInstance();
     }
 
     /**
-     * Returns the current graph contained in the instance.
+     * Returns an array with all of the vertices in the graph.
      *
      * @return The current graph.
      */
-    public static Node[] getGraph() {
-        return getInstance().graph;
+    public Node[] getVerticesArray() {
+        return graph;
     }
 
     /**
@@ -82,10 +85,10 @@ public class Graph {
      *
      * @return Size of the current graph.
      */
-    public static int getSize() {
-        Node[] currentGraph = getGraph();
-        if (currentGraph != null) {
-            return currentGraph.length;
+    public int getSize() {
+        Node[] vertices = this.getVerticesArray();
+        if (vertices != null) {
+            return vertices.length;
         }
         return 0;
     }
@@ -97,10 +100,10 @@ public class Graph {
      * @param nodeId Id of the node to return.
      * @return Node with id = nodeId.
      */
-    public static Node getNode(int nodeId) {
-        Node[] currentGraph = getGraph();
-        if (currentGraph != null && nodeId > 0 && currentGraph.length > nodeId) {
-            return currentGraph[nodeId];
+    public Node getNode(int nodeId) {
+        Node[] vertices = this.getVerticesArray();
+        if (vertices != null && nodeId > 0 && vertices.length > nodeId) {
+            return vertices[nodeId];
         }
         return null;
     }
