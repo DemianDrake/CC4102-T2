@@ -33,5 +33,5 @@ public interface DijkstraMPA {
 	 * @param p		The last node of the path
 	 * @return		Minimal path's distance from origin to p
 	 */
-	public int getDistanceTo(Node p);
+	public double getDistanceTo(Node p);
 }

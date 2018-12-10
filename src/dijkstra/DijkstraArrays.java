@@ -41,7 +41,7 @@ public class DijkstraArrays implements DijkstraMPA {
 	 * @param size	New size of DijkstraArrays' arrays
 	 */
 	public void setSize(int size) {
-		dist = new int[size];
+		dist = new double[size];
 		prev = new Node[size];
 		ready = new boolean[size];
 	}
