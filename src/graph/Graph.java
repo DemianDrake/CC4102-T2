@@ -1,10 +1,7 @@
 package graph;
 
 import java.lang.IllegalArgumentException;
-import java.util.ArrayList;
 import java.util.Random;
-
-import javafx.util.Pair;
 
 /**
  * @author Alexis Espinoza G.
@@ -14,6 +11,7 @@ import javafx.util.Pair;
 public class Graph {
 
     private static Graph singleton;
+    private Node[] graph;
 
     private Graph() {
     }
@@ -21,13 +19,19 @@ public class Graph {
     public static Graph getInstance() {
         if (singleton == null) {
             singleton = new Graph();
+            singleton.graph = null;
         }
         return singleton;
     }
 
-    // Initial implementation without nodes
-    public static ArrayList<Pair<Integer, Double>>[] createRandom(int vertices, int edges)
-            throws IllegalArgumentException {
+    /**
+     * Creates a new random connected graph in the instance, replacing the previous graph.
+     *
+     * @param vertices Amount of vertices for the new random graph
+     * @param edges    Amount of edges for the new random graph
+     * @throws IllegalArgumentException if the amount of edges isn't enough to generate a connected graph
+     */
+    public static void createRandom(int vertices, int edges) throws IllegalArgumentException {
 
         // Check if there are enough edges to return a connected graph
         if (edges < vertices - 1) {
@@ -37,30 +41,40 @@ public class Graph {
         // Create a random number generator
         Random rng = new Random();
 
-        // Create the graph representation
-        @SuppressWarnings("unchecked")
-        ArrayList<Pair<Integer, Double>>[] graph =
-                (ArrayList<Pair<Integer, Double>>[]) new ArrayList[vertices]; // Ahí hay n
+        // Create the graph representation and the new Nodes
+        Graph instance = getInstance();
+        instance.graph = new Node[vertices];
+        for (int i = 0; i < vertices; i++) {
+            instance.graph[i] = new Node(i);
+        }
+
 
         // Create (vertices - 1) edges connecting every vertex to the next
         double weight;
-        for (int i = 0; i < vertices - 1; i++) { // Aquí hay que hacer n - 1 aristas
+        for (int i = 0; i < vertices - 1; i++) {
             weight = rng.nextDouble();
-            graph[i].add(new Pair<>(i + 1, weight));
-            graph[i + 1].add(new Pair<>(i, weight));
+            instance.graph[i].addAdjacentNode(instance.graph[i + 1], weight);
+            instance.graph[i + 1].addAdjacentNode(instance.graph[i], weight);
         }
 
         //  Create (edges - (vertices - 1)) edges at random
         int v1, v2;
-        for (int i = 0; i < edges - (vertices - 1); i++) { // Aquí se hacen e - (n - 1) aristas
+        for (int i = 0; i < edges - (vertices - 1); i++) {
             v1 = rng.nextInt(vertices);
             v2 = rng.nextInt(vertices);
             weight = rng.nextDouble();
-            graph[v1].add(new Pair<>(v2, weight));
-            graph[v2].add(new Pair<>(v1, weight));
+            instance.graph[v1].addAdjacentNode(instance.graph[v2], weight);
+            instance.graph[v2].addAdjacentNode(instance.graph[v1], weight);
         }
+    }
 
-        return graph;
+    /**
+     * Returns the current graph contained in the instance.
+     *
+     * @return The current graph.
+     */
+    public static Node[] getGraph() {
+        return getInstance().graph;
     }
 
 }
