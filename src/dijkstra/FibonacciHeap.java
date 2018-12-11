@@ -72,15 +72,19 @@ public class FibonacciHeap implements Heap {
 		Node z = H.getMin();
 		if(z!=null) {
 			Node x=z.getChild();
-			Node y=x.getRight();
-			for(int i=0; i<z.getDegree();i++) {
-				insert(H,x);
-				x.setP(null);
-				x=y;
-				y=y.getRight();
+			if(x!=null) {
+				Node y=x.getRight();
+				for(int i=0; i<z.getDegree();i++) {
+					insert(H,x);
+					x.setP(null);
+					x=y;
+					y=y.getRight();
+				}
 			}
-			z.getRight().setLeft(z.getLeft());
-			z.getLeft().setRight(z.getRight());
+			if(z.getRight() != null && z.getLeft() != null) {
+				z.getRight().setLeft(z.getLeft());
+				z.getLeft().setRight(z.getRight());
+			}
 			if(z==z.getRight()) {
 				H.setMin(null);
 			}
@@ -123,7 +127,7 @@ public class FibonacciHeap implements Heap {
 				cut(H,x,y);
 				cascading_cut(H,y);
 		}
-		if (x.getKey()<H.getMin().getKey()) {
+		if (H.getMin() == null || x.getKey()<H.getMin().getKey()) {
 			H.setMin(x);
 		}
 	}
@@ -144,6 +148,9 @@ public class FibonacciHeap implements Heap {
 		Node y;
 		Node z;
 		for(int i=0; i<H.getN(); i++) {
+			if(w == null) {
+				continue;
+			}
 			x=w;
 			int d = x.getDegree();
 			while(A[d]!=null) {

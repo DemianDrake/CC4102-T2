@@ -76,12 +76,12 @@ public class DijkstraArrays implements DijkstraMPA {
 			minNodeId = -1;
 
 			for (j = 0; j < size; j++) {
-				if (!ready[j] && dist[j] < minDist) {
+				if (!ready[j] && dist[j] <= minDist) {
 					minDist = dist[j];
 					minNodeId = j;
 				}
 			}
-
+			
 			Node u = g.getNode(minNodeId);
 			ready[u.getId()] = true;
 
