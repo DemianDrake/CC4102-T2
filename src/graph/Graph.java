@@ -102,7 +102,7 @@ public class Graph {
 	 */
 	public Node getNode(int nodeId) {
 		Node[] vertices = this.getVerticesArray();
-		if (vertices != null && nodeId > 0 && vertices.length > nodeId) {
+		if (vertices != null && nodeId >= 0 && vertices.length > nodeId) {
 			return vertices[nodeId];
 		}
 		return null;
