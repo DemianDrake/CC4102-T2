@@ -2,7 +2,7 @@ package dijkstra;
 
 public class Node{
 	
-	private int key;
+	private double key;
 	private int value;
 	private Node left;
 	private Node right;
@@ -11,12 +11,12 @@ public class Node{
 	private int degree;
 	private boolean mark;
 	
-	public Node (int key, int value) {
+	public Node (double key, int value) {
 		this.key=key;
 		this.value=value;
 	}
 	
-	public void setKey(int i) {
+	public void setKey(double i) {
 		this.key=i;
 	}
 	
@@ -48,7 +48,7 @@ public class Node{
 		this.mark=b;
 	}
 	
-	public int getKey() {
+	public double getKey() {
 		return this.key;
 	}
 	

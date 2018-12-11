@@ -19,7 +19,7 @@ public interface DijkstraMPA {
 	 * @param origin Origin node from which every path will start
 	 * @return Time that algorithm took to execute
 	 */
-	public long dijkstra(Graph g, graph.Node origin);
+	public DijkstraResult dijkstra(Graph g, graph.Node origin);
 
 	/**
 	 * Returns a list of nodes representing a minimal path from the first node of itself to the

@@ -11,19 +11,50 @@ public class Main {
 		
 		Graph g = Graph.createRandom(n, n*10);
 		graph.Node origin = g.getNode(42); // Origin is 42 because reasons
-		DijkstraArrays a = new DijkstraArrays(n);
+		DijkstraMPA a = new DijkstraArrays(n);
+		DijkstraHeap h = new DijkstraHeap();
+		
 		FibonacciHeap fh = new FibonacciHeap();
-		ClassicHeap ch = new ClassicHeap();
+		BinaryHeap bh = new BinaryHeap();
 		
 		System.out.println("Calculating minimal path from node 42...");
 		
-		double tArrays = a.dijkstra(g, origin) / 1000.;
-		double tFibonacci = fh.dijkstra(g, origin) / 1000.;
-		double tHeap = ch.dijkstra(g, origin) / 1000.;
+		DijkstraResult arrayResult = a.dijkstra(g, origin);
 		
-		System.out.println("<Arrays> took " + Double.toString(tArrays) + " seconds to complete the operation.");
-		System.out.println("<FibonacciHeap> took " + Double.toString(tFibonacci) + " seconds to complete the operation.");
-		System.out.println("<ClassicHeap> took " + Double.toString(tHeap) + " seconds to complete the operation.");
+		h.setHeap(fh);
+		DijkstraResult fibonacciResult = h.dijkstra(g, origin);
+		//DijkstraResult binaryResult = bh.dijkstra(g, origin);
 		
+		System.out.println("<Arrays> took " + Double.toString(arrayResult.getTime()) + " miliseconds to complete the operation.");
+		System.out.println("<FibonacciHeap> took " + Double.toString(fibonacciResult.getTime()) + " miliseconds to complete the operation.");
+		//System.out.println("<BinaryHeap> took " + Double.toString(binaryResult.getTime()) + " miliseconds to complete the operation.");
+		
+		
+		System.out.println("\nSecond experiment n = 100.000, e = n * 100");
+		
+		g = Graph.createRandom(n,  n*100);
+		origin = g.getNode(42);
+		
+		System.out.println("Calculating minimal path from node 42...");
+		
+		arrayResult = a.dijkstra(g, origin);
+		fibonacciResult = h.dijkstra(g, origin);
+		
+		System.out.println("<Arrays> took " + Double.toString(arrayResult.getTime()) + " miliseconds to complete the operation.");
+		System.out.println("<FibonacciHeap> took " + Double.toString(fibonacciResult.getTime()) + " miliseconds to complete the operation.");
+
+		System.out.println("\nThird experiment n = 100.000, e = n * 1000");
+		
+		g = Graph.createRandom(n,  n*1000);
+		origin = g.getNode(42);
+		
+		System.out.println("Calculating minimal path from node 42...");
+		
+		arrayResult = a.dijkstra(g, origin);
+		fibonacciResult = h.dijkstra(g, origin);
+		
+		System.out.println("<Arrays> took " + Double.toString(arrayResult.getTime()) + " miliseconds to complete the operation.");
+		System.out.println("<FibonacciHeap> took " + Double.toString(fibonacciResult.getTime()) + " miliseconds to complete the operation.");
+
 	}
 }

@@ -50,7 +50,7 @@ public class DijkstraArrays implements DijkstraMPA {
 	}
 
 	@Override
-	public long dijkstra(Graph g, Node origin) {
+	public DijkstraResult dijkstra(Graph g, Node origin) {
 		long t0 = System.currentTimeMillis();
 		int size = g.getSize();
 		if (size != dist.length) {
@@ -65,14 +65,14 @@ public class DijkstraArrays implements DijkstraMPA {
 			if (i == origin.getId()) {
 				dist[i] = 0;
 			} else {
-				dist[i] = Integer.MAX_VALUE;
+				dist[i] = Double.MAX_VALUE;
 			}
 			ready[i] = false;
 			prev[i] = null;
 		}
 
 		for (i = 0; i < size; i++) {
-			minDist = Integer.MAX_VALUE;
+			minDist = Double.MAX_VALUE;
 			minNodeId = -1;
 
 			for (j = 0; j < size; j++) {
@@ -97,7 +97,9 @@ public class DijkstraArrays implements DijkstraMPA {
 			}
 		}
 
-		return System.currentTimeMillis() - t0;
+		long tf = System.currentTimeMillis() - t0;
+		
+		return new DijkstraResult(origin, dist, prev, tf);
 	}
 
 	@Override

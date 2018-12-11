@@ -1,6 +1,6 @@
 package dijkstra;
 
-public class FibonacciHeap {
+public class FibonacciHeap implements Heap {
 	
 	private Node min;
 	private int n;
@@ -27,6 +27,11 @@ public class FibonacciHeap {
 		this.n=i;
 	}
 	
+	@Override
+	public void insert(Node x) {
+		FibonacciHeap.insert(this, x);
+	}
+	
 	public static void insert (FibonacciHeap H, Node x) {
 		x.setDegree(0);
 		x.setP(null);
@@ -49,8 +54,18 @@ public class FibonacciHeap {
 		H.setN(H.getN()+1);
 	}
 	
+	@Override
+	public Node minimum() {
+		return FibonacciHeap.minimum(this);
+	}
+	
 	public static Node minimum(FibonacciHeap H) {
 		return H.getMin();
+	}
+	
+	@Override
+	public Node extract_min() {
+		return FibonacciHeap.extract_min(this);
 	}
 	
 	public static Node extract_min(FibonacciHeap H) {
@@ -93,7 +108,12 @@ public class FibonacciHeap {
 		return H;
 	}
 	
-	public static void decrease_key(FibonacciHeap H, Node x, int k) {
+	@Override
+	public void decrease_key(Node x, double k) {
+		FibonacciHeap.decrease_key(this, x, k);
+	}
+	
+	public static void decrease_key(FibonacciHeap H, Node x, double k) {
 		if(k>x.getKey()) {
 			/*error*/
 		}
@@ -187,5 +207,10 @@ public class FibonacciHeap {
 				cascading_cut(H,z);
 			}
 		}
+	}
+	
+	@Override
+	public boolean isEmpty() {
+		return this.minimum() == null;
 	}
 }
