@@ -1,6 +1,8 @@
 package graph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -10,10 +12,14 @@ import java.util.Map;
  */
 public class Node {
 	private int i;
-	private Map<Integer, Double> adjNodes;
+	private List<Node> adjNodes;
+	private List<Double> adjNodesWeight;
+	//private Map<Integer, Double> adjNodes;
 
 	public Node() {
-		adjNodes = new HashMap<Integer, Double>();
+		//adjNodes = new HashMap<Integer, Double>();
+		adjNodes = new ArrayList<Node>();
+		adjNodesWeight = new ArrayList<Double>();
 	}
 
 	public Node(int i) {
@@ -34,14 +40,22 @@ public class Node {
 	}
 
 	public void addAdjacentNode(Node n, double weight) {
-		adjNodes.put(n.getId(), weight);
+		//adjNodes.put(n.getId(), weight);
+		adjNodes.add(n);
+		adjNodesWeight.add(weight);
 	}
 
 	public int countAdjNodes() {
+		//return adjNodes.size();
 		return adjNodes.size();
 	}
 
-	public Map<Integer, Double> getAdjacents() {
+	public List<Node> getAdjacents() {
+		//return adjNodes;
 		return adjNodes;
+	}
+	
+	public double getWeightEdgeTo(Node p) {
+		return adjNodesWeight.get(adjNodes.indexOf(p));
 	}
 }

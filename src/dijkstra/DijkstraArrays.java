@@ -85,11 +85,11 @@ public class DijkstraArrays implements DijkstraMPA {
 			Node u = g.getNode(minNodeId);
 			ready[u.getId()] = true;
 
-			Iterator<Map.Entry<Integer, Double>> it = u.getAdjacents().entrySet().iterator();
+			Iterator<Node> it = u.getAdjacents().iterator();
 			while (it.hasNext()) {
-				Map.Entry<Integer, Double> entry = (Map.Entry<Integer, Double>) it.next();
-				double currentDistance = dist[minNodeId] + entry.getValue();
-				int v = entry.getKey();
+				Node entry = (Node) it.next();
+				double currentDistance = dist[minNodeId] + u.getWeightEdgeTo(entry);
+				int v = entry.getId();
 				if (dist[v] > currentDistance) {
 					dist[v] = currentDistance;
 					prev[v] = u;

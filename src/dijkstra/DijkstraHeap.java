@@ -52,15 +52,15 @@ public class DijkstraHeap implements DijkstraMPA {
 		while(!heap.isEmpty()) {
 			dijkstra.Node min = heap.extract_min();
 			graph.Node m = g.getNode(min.getValue());
-			Iterator<Map.Entry<Integer, Double>> it = m.getAdjacents().entrySet().iterator();
+			Iterator<Node> it = m.getAdjacents().iterator();
 			while (it.hasNext()) {
-				Map.Entry<Integer, Double> entry = (Map.Entry<Integer, Double>) it.next();
-				double currentDistance = dist[min.getValue()] + entry.getValue();
-				int v = entry.getKey();
+				Node entry = (Node) it.next();
+				double currentDistance = dist[min.getValue()] + m.getWeightEdgeTo(entry);
+				int v = entry.getId();
 				if (dist[v] > currentDistance) {
 					dist[v] = currentDistance;
 					prev[v] = m;
-					heap.decrease_key(new dijkstra.Node(entry.getValue(), entry.getKey()), currentDistance);
+					heap.decrease_key(new dijkstra.Node(m.getWeightEdgeTo(entry), entry.getId()), currentDistance);
 				}
 			}
 		}
